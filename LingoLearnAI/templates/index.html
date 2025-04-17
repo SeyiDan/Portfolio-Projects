@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LingoLearnAI</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #333; }
+        .card { border: 1px solid #ddd; border-radius: 4px; padding: 20px; margin-bottom: 20px; }
+        .status { padding: 5px 10px; border-radius: 3px; font-size: 14px; display: inline-block; }
+        .available { background-color: #d4edda; color: #155724; }
+        .unavailable { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to LingoLearnAI</h1>
+        <p>A language learning application that uses NLP techniques to help users learn new languages.</p>
+        
+        <div class="card">
+            <h2>System Status</h2>
+            <p>
+                NLTK: 
+                <span class="status {% if nltk_available %}available{% else %}unavailable{% endif %}">
+                    {% if nltk_available %}Available{% else %}Unavailable{% endif %}
+                </span>
+            </p>
+            <p>
+                spaCy: 
+                <span class="status {% if spacy_available %}available{% else %}unavailable{% endif %}">
+                    {% if spacy_available %}Available{% else %}Unavailable{% endif %}
+                </span>
+            </p>
+            <p>
+                Translator: 
+                <span class="status {% if translator_available %}available{% else %}unavailable{% endif %}">
+                    {% if translator_available %}Available{% else %}Unavailable{% endif %}
+                </span>
+            </p>
+        </div>
+        
+        <div class="card">
+            <h2>Getting Started</h2>
+            <p>To start using LingoLearnAI, make sure all dependencies are properly installed.</p>
+            <p>Check the README.md file for detailed instructions on setting up the environment.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -4,10 +4,15 @@ Flask-Login==0.6.2
 Flask-WTF==1.2.1
 python-dotenv==1.0.0
 requests==2.31.0
-googletrans==4.0.0-rc1
-nltk==3.8.1
-spacy==3.7.2
-scikit-learn==1.3.0
-pandas==2.1.1
+# Using pre-built wheels for NLP packages
+googletrans==3.1.0a0
+# Avoid scikit-learn compilation issues
+scikit-learn>=1.3.0
+# Use a specific version of NLTK
+nltk>=3.8.0
+# Specify pandas version
+pandas>=1.5.0
+# Specify minimal spaCy version
+spacy>=3.5.3
 pytest==7.4.0
 gunicorn==21.2.0 
