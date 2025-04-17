@@ -1,0 +1,10 @@
+Flask
+Flask-SocketIO
+Flask-SQLAlchemy
+Flask-Login
+python-dotenv
+gunicorn
+eventlet
+Pygments
+pytest
+Werkzeug 

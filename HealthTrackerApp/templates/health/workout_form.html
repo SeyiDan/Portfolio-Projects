@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Log Workout - Health Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Log Workout</h4>
+                <a href="{{ url_for('health.workout_history') }}" class="btn btn-sm btn-light">
+                    <i class="fas fa-history"></i> View History
+                </a>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('health.workout') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.workout_type.label(class="form-label") }}
+                        {{ form.workout_type(class="form-control") }}
+                        {% for error in form.workout_type.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">E.g., Running, Cycling, Strength Training, Yoga, etc.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.duration.label(class="form-label") }}
+                        {{ form.duration(class="form-control") }}
+                        {% for error in form.duration.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.calories_burned.label(class="form-label") }}
+                            {{ form.calories_burned(class="form-control") }}
+                            {% for error in form.calories_burned.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Optional</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.distance.label(class="form-label") }}
+                            {{ form.distance(class="form-control") }}
+                            {% for error in form.distance.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                            <div class="form-text">Optional, for distance-based workouts</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.date.label(class="form-label") }}
+                        {{ form.date(class="form-control", type="date") }}
+                        {% for error in form.date.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.notes.label(class="form-label") }}
+                        {{ form.notes(class="form-control", rows=3) }}
+                        {% for error in form.notes.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">Optional: Add details about exercises, weights, sets, reps, etc.</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Workout Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Aim for at least 150 minutes of moderate aerobic activity or 75 minutes of vigorous activity per week
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Include strength training exercises for all major muscle groups at least twice a week
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Remember to warm up before and cool down after your workout
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Stay hydrated before, during, and after your workout
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

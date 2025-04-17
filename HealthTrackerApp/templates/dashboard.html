@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Health Tracker{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Your Health Dashboard</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 card-dashboard border-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Current Weight</h6>
+                        <h2 class="card-title">
+                            {% if recent_weight %}
+                                {{ recent_weight.weight }} kg
+                            {% else %}
+                                --
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="display-4 text-primary">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                </div>
+                <p class="card-text">
+                    {% if recent_weight %}
+                        Last updated: {{ recent_weight.date.strftime('%Y-%m-%d') }}
+                    {% else %}
+                        No weight data yet
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('health.weight') }}" class="btn btn-sm btn-primary">Add New</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 card-dashboard border-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">BMI</h6>
+                        <h2 class="card-title">
+                            {% if bmi %}
+                                {{ bmi }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="display-4 text-success">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                </div>
+                <p class="card-text">
+                    {% if bmi %}
+                        {% if bmi < 18.5 %}
+                            Underweight
+                        {% elif bmi < 25 %}
+                            Normal weight
+                        {% elif bmi < 30 %}
+                            Overweight
+                        {% else %}
+                            Obese
+                        {% endif %}
+                    {% else %}
+                        Enter weight & height in profile
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('auth.profile') }}" class="btn btn-sm btn-success">Update Profile</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 card-dashboard border-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Last Workout</h6>
+                        <h2 class="card-title">
+                            {% if recent_workout %}
+                                {{ recent_workout.workout_type }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="display-4 text-warning">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+                <p class="card-text">
+                    {% if recent_workout %}
+                        {{ recent_workout.duration }} mins on {{ recent_workout.date.strftime('%Y-%m-%d') }}
+                    {% else %}
+                        No workout data yet
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('health.workout') }}" class="btn btn-sm btn-warning">Add New</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 card-dashboard border-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Last Sleep</h6>
+                        <h2 class="card-title">
+                            {% if recent_sleep %}
+                                {{ recent_sleep.hours }} hrs
+                            {% else %}
+                                --
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="display-4 text-info">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                </div>
+                <p class="card-text">
+                    {% if recent_sleep %}
+                        Quality: {{ recent_sleep.quality }}/10 on {{ recent_sleep.date.strftime('%Y-%m-%d') }}
+                    {% else %}
+                        No sleep data yet
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('health.sleep') }}" class="btn btn-sm btn-info">Add New</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Weight Trend (Last 30 Days)</h5>
+            </div>
+            <div class="card-body">
+                {% if weight_chart %}
+                    <img src="data:image/png;base64,{{ weight_chart }}" class="img-fluid" alt="Weight Trend">
+                {% else %}
+                    <div class="alert alert-info">
+                        Not enough weight data to display chart. <a href="{{ url_for('health.weight') }}">Add weight logs</a> to see your trend.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Calorie Intake (Last 7 Days)</h5>
+            </div>
+            <div class="card-body">
+                {% if nutrition_chart %}
+                    <img src="data:image/png;base64,{{ nutrition_chart }}" class="img-fluid" alt="Calorie Intake">
+                {% else %}
+                    <div class="alert alert-info">
+                        Not enough nutrition data to display chart. <a href="{{ url_for('health.nutrition') }}">Add nutrition logs</a> to see your trend.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Active Goals -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Active Goals</h5>
+                <a href="{{ url_for('health.goals') }}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus"></i> Add New Goal
+                </a>
+            </div>
+            <div class="card-body">
+                {% if active_goals %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Goal Type</th>
+                                    <th>Description</th>
+                                    <th>Target</th>
+                                    <th>Target Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for goal in active_goals %}
+                                <tr>
+                                    <td>
+                                        {% if goal.goal_type == 'weight' %}
+                                            <i class="fas fa-weight text-primary"></i>
+                                        {% elif goal.goal_type == 'nutrition' %}
+                                            <i class="fas fa-utensils text-success"></i>
+                                        {% elif goal.goal_type == 'workout' %}
+                                            <i class="fas fa-dumbbell text-warning"></i>
+                                        {% elif goal.goal_type == 'sleep' %}
+                                            <i class="fas fa-bed text-info"></i>
+                                        {% endif %}
+                                        {{ goal.goal_type.capitalize() }}
+                                    </td>
+                                    <td>{{ goal.description }}</td>
+                                    <td>{{ goal.target_value }}</td>
+                                    <td>{{ goal.target_date.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        <form action="{{ url_for('health.mark_goal_achieved', goal_id=goal.id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-success" title="Mark as Achieved">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                        <a href="{{ url_for('health.goals_list') }}" class="btn btn-sm btn-secondary" title="View All Goals">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No active goals. <a href="{{ url_for('health.goals') }}">Set a new goal</a> to track your progress.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <h3 class="mb-3">Quick Actions</h3>
+    </div>
+    <div class="col-md-3 mb-3">
+        <a href="{{ url_for('health.weight') }}" class="btn btn-outline-primary w-100 py-3">
+            <i class="fas fa-weight"></i> Log Weight
+        </a>
+    </div>
+    <div class="col-md-3 mb-3">
+        <a href="{{ url_for('health.nutrition') }}" class="btn btn-outline-success w-100 py-3">
+            <i class="fas fa-utensils"></i> Log Meal
+        </a>
+    </div>
+    <div class="col-md-3 mb-3">
+        <a href="{{ url_for('health.workout') }}" class="btn btn-outline-warning w-100 py-3">
+            <i class="fas fa-dumbbell"></i> Log Workout
+        </a>
+    </div>
+    <div class="col-md-3 mb-3">
+        <a href="{{ url_for('health.sleep') }}" class="btn btn-outline-info w-100 py-3">
+            <i class="fas fa-bed"></i> Log Sleep
+        </a>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}About - Health Tracker{% endblock %}
+
+{% block content %}
+{% block unauth_content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="display-4 text-primary mb-4">About Health Tracker</h1>
+                    
+                    <p class="lead">Health Tracker is a comprehensive health and fitness monitoring application designed to help you achieve your wellness goals.</p>
+                    
+                    <hr class="my-4">
+                    
+                    <h2 class="h3 text-primary mb-3">Our Mission</h2>
+                    <p>Our mission is to empower individuals to take control of their health by providing intuitive tools for tracking, analyzing, and improving various aspects of their well-being.</p>
+                    
+                    <h2 class="h3 text-primary mb-3 mt-4">Key Features</h2>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-weight fa-2x text-primary me-3"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5">Weight Tracking</h3>
+                                    <p>Log and visualize your weight changes over time with detailed charts and trend analysis.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-utensils fa-2x text-primary me-3"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5">Nutrition Logging</h3>
+                                    <p>Track your daily food intake, calories, and macronutrients to maintain a balanced diet.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-dumbbell fa-2x text-primary me-3"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5">Workout Tracking</h3>
+                                    <p>Record exercise sessions, track progress, and monitor calories burned during workouts.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-bed fa-2x text-primary me-3"></i>
+                                </div>
+                                <div>
+                                    <h3 class="h5">Sleep Monitoring</h3>
+                                    <p>Track sleep duration and quality to ensure you're getting proper rest for recovery.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="h3 text-primary mb-3 mt-4">Our Approach</h2>
+                    <p>We believe that sustainable health improvements come from consistent tracking, awareness of patterns, and data-driven decisions. Health Tracker provides the tools you need to:</p>
+                    
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Set realistic and achievable health goals</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Monitor your progress with intuitive visualizations</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Identify patterns in your health behaviors</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Make informed adjustments to your lifestyle</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Celebrate your achievements along the way</li>
+                    </ul>
+                    
+                    <div class="text-center mt-5">
+                        <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg px-4 me-md-2">Get Started Today</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %} 

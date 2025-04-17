@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Log Sleep - Health Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Log Sleep</h4>
+                <a href="{{ url_for('health.sleep_history') }}" class="btn btn-sm btn-light">
+                    <i class="fas fa-history"></i> View History
+                </a>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('health.sleep') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.hours.label(class="form-label") }}
+                        {{ form.hours(class="form-control") }}
+                        {% for error in form.hours.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">Enter total hours of sleep (can include fractions like 7.5)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.quality.label(class="form-label") }}
+                        {{ form.quality(class="form-control") }}
+                        {% for error in form.quality.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">Rate your sleep quality from 1 (poor) to 10 (excellent)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.date.label(class="form-label") }}
+                        {{ form.date(class="form-control", type="date") }}
+                        {% for error in form.date.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.notes.label(class="form-label") }}
+                        {{ form.notes(class="form-control", rows=3) }}
+                        {% for error in form.notes.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">Optional: Add any notes about your sleep (dreams, waking up, etc.)</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Sleep Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Aim for 7-9 hours of sleep per night for adults
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Maintain a consistent sleep schedule, even on weekends
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Create a relaxing bedtime routine
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Keep your bedroom cool, dark, and quiet
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Limit screen time before bed
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

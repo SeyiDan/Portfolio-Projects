@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Log Nutrition - Health Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Log Nutrition</h4>
+                <a href="{{ url_for('health.nutrition_history') }}" class="btn btn-sm btn-light">
+                    <i class="fas fa-history"></i> View History
+                </a>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('health.nutrition') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.meal_type.label(class="form-label") }}
+                        {{ form.meal_type(class="form-select") }}
+                        {% for error in form.meal_type.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.calories.label(class="form-label") }}
+                        {{ form.calories(class="form-control") }}
+                        {% for error in form.calories.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            {{ form.protein.label(class="form-label") }}
+                            {{ form.protein(class="form-control") }}
+                            {% for error in form.protein.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.carbs.label(class="form-label") }}
+                            {{ form.carbs(class="form-control") }}
+                            {% for error in form.carbs.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            {{ form.fat.label(class="form-label") }}
+                            {{ form.fat(class="form-control") }}
+                            {% for error in form.fat.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.food_items.label(class="form-label") }}
+                        {{ form.food_items(class="form-control", rows=3) }}
+                        {% for error in form.food_items.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">List the foods you ate in this meal</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.date.label(class="form-label") }}
+                        {{ form.date(class="form-control", type="date") }}
+                        {% for error in form.date.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.notes.label(class="form-label") }}
+                        {{ form.notes(class="form-control", rows=3) }}
+                        {% for error in form.notes.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">Optional: Add any additional notes about this meal</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Nutrition Tracking Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Try to be as accurate as possible with portion sizes
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Include all ingredients, condiments, and beverages
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Focus on balanced macronutrient intake for overall health
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Remember to stay hydrated throughout the day
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

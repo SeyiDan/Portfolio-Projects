@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Health Tracker - Your Personal Health Companion{% endblock %}
+
+{% block content %}
+{% block unauth_content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-4 fw-bold text-primary">
+        <i class="fas fa-heartbeat"></i> Health Tracker
+    </h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            A comprehensive health tracking application to monitor your weight, nutrition, workouts, sleep patterns, and achieve your health goals.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg px-4 gap-3">
+                Go to Dashboard
+            </a>
+            {% else %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 gap-3">
+                Sign Up
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                Log In
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="text-center mb-4">Features</h2>
+    <div class="row g-4 py-5">
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-weight fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Weight Tracking</h3>
+                    <p class="card-text">Log your weight measurements and visualize trends over time.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-utensils fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Nutrition Logging</h3>
+                    <p class="card-text">Track your daily food intake, calories, and macronutrients.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-dumbbell fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Workout Tracking</h3>
+                    <p class="card-text">Record your exercise sessions, duration, and calories burned.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-bed fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Sleep Monitoring</h3>
+                    <p class="card-text">Track your sleep duration and quality for better health.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-bullseye fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Goal Setting</h3>
+                    <p class="card-text">Set health and fitness goals with target dates and track progress.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 card-dashboard">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-3x health-icon mb-3"></i>
+                    <h3 class="card-title">Data Visualization</h3>
+                    <p class="card-text">View charts and graphs of your health data to identify trends.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>Why Track Your Health?</h2>
+                <p class="lead">Tracking your health metrics can help you:</p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Stay motivated and accountable</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Identify patterns and correlations</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Make data-driven health decisions</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Monitor progress toward your goals</li>
+                    <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Maintain healthy habits long-term</li>
+                </ul>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary px-4">Get Started Today</a>
+            </div>
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&q=80&w=600&h=400" class="img-fluid rounded shadow-lg" alt="Health tracking">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %} 

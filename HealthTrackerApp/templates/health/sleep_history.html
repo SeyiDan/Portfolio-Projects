@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Sleep History - Health Tracker{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Sleep History</h4>
+        <a href="{{ url_for('health.sleep') }}" class="btn btn-sm btn-light">
+            <i class="fas fa-plus"></i> Add New Log
+        </a>
+    </div>
+    <div class="card-body">
+        {% if logs %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Hours of Sleep</th>
+                        <th>Quality (1-10)</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ log.hours }} hours</td>
+                        <td>
+                            {% if log.quality %}
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">{{ log.quality }}</span>
+                                    <div class="progress flex-grow-1" style="height: 6px;">
+                                        <div class="progress-bar" role="progressbar" 
+                                            style="width: {{ log.quality*10 }}%;" 
+                                            aria-valuenow="{{ log.quality }}" 
+                                            aria-valuemin="0" 
+                                            aria-valuemax="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if log.notes %}
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#notesModal{{ log.id }}">
+                                View Notes
+                            </button>
+                            
+                            <!-- Notes Modal -->
+                            <div class="modal fade" id="notesModal{{ log.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                Sleep on {{ log.date.strftime('%Y-%m-%d') }}
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>Notes:</h6>
+                                            <p class="text-muted">{{ log.notes }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ url_for('health.delete_sleep', log_id=log.id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this log?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i> You haven't logged any sleep data yet. 
+            <a href="{{ url_for('health.sleep') }}" class="alert-link">Start tracking your sleep</a>.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Sleep Summary Card -->
+{% if logs %}
+<div class="card shadow mt-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Sleep Summary</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Last 7 Days</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Average Sleep Duration:</th>
+                            <td>
+                                {% if logs|length > 0 %}
+                                    {{ (logs|sum(attribute='hours') / logs|length)|round(1) }} hours
+                                {% else %}
+                                    0 hours
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Average Sleep Quality:</th>
+                            <td>
+                                {% if logs|selectattr('quality')|list|length > 0 %}
+                                    {{ (logs|selectattr('quality')|sum(attribute='quality') / logs|selectattr('quality')|list|length)|round(1) }}/10
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6>Sleep Quality Trend</h6>
+                <p class="text-muted small">Sleep quality visualization coming soon...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

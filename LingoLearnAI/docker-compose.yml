@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: lingo_learn_ai
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=wsgi.py
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY:-dev_lingo_learn_key}
+      - DATABASE_URI=sqlite:///lingo_learn.db
+    volumes:
+      - ./data:/app/data
+    networks:
+      - lingo_network
+
+  # Add a database service later if needed
+  # db:
+  #   image: postgres:13
+  #   environment:
+  #     - POSTGRES_USER=lingo
+  #     - POSTGRES_PASSWORD=securepassword
+  #     - POSTGRES_DB=lingolearnai
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - lingo_network
+
+networks:
+  lingo_network:
+    driver: bridge
+
+# volumes:
+#   postgres_data: 

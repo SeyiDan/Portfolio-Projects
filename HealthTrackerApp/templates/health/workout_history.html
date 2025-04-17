@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Workout History - Health Tracker{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Workout History</h4>
+        <a href="{{ url_for('health.workout') }}" class="btn btn-sm btn-light">
+            <i class="fas fa-plus"></i> Add New Log
+        </a>
+    </div>
+    <div class="card-body">
+        {% if logs %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Workout Type</th>
+                        <th>Duration</th>
+                        <th>Calories Burned</th>
+                        <th>Distance</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ log.workout_type }}</td>
+                        <td>{{ log.duration }} min</td>
+                        <td>{% if log.calories_burned %}{{ log.calories_burned }}{% else %}-{% endif %}</td>
+                        <td>{% if log.distance %}{{ log.distance }} km{% else %}-{% endif %}</td>
+                        <td>
+                            {% if log.notes %}
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#notesModal{{ log.id }}">
+                                View Notes
+                            </button>
+                            
+                            <!-- Notes Modal -->
+                            <div class="modal fade" id="notesModal{{ log.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                {{ log.workout_type }} on {{ log.date.strftime('%Y-%m-%d') }}
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>Notes:</h6>
+                                            <p class="text-muted">{{ log.notes }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ url_for('health.delete_workout', log_id=log.id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this log?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i> You haven't logged any workouts yet. 
+            <a href="{{ url_for('health.workout') }}" class="alert-link">Start tracking your workouts</a>.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Workout Summary Card -->
+{% if logs %}
+<div class="card shadow mt-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Workout Summary</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>This Month</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Total Workouts
+                        <span class="badge bg-primary rounded-pill">{{ logs|length }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Total Minutes
+                        <span class="badge bg-primary rounded-pill">
+                            {{ logs|sum(attribute='duration') }}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Avg. Workout Duration
+                        <span class="badge bg-primary rounded-pill">
+                            {% if logs|length > 0 %}
+                                {{ (logs|sum(attribute='duration') / logs|length)|round|int }} min
+                            {% else %}
+                                0 min
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>Frequent Activity Types</h6>
+                <p class="text-muted small">Coming soon...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 
