@@ -38,6 +38,14 @@ Each project has its own setup instructions in their respective directories. Gen
    python app.py
    ```
 
+## Port Configuration
+
+Each application is configured to run on a different port to avoid conflicts:
+
+- **HealthTrackerApp**: http://localhost:8000
+- **LingoLearnAI**: http://localhost:5001  
+- **CodeCollaborationHub**: http://localhost:8080
+
 ## Contact
 
 For more information about these projects, please contact me at [your.email@example.com]. 
