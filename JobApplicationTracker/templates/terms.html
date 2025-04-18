@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Terms of Service - Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">Terms of Service</h1>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h2 class="h4">1. Acceptance of Terms</h2>
+                        <p>By accessing and using Job Application Tracker, you agree to be bound by these Terms of Service.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">2. Description of Service</h2>
+                        <p>Job Application Tracker provides tools to help you manage and track your job application process.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">3. User Accounts</h2>
+                        <p>You are responsible for maintaining the security of your account and password. The application cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">4. Data Privacy</h2>
+                        <p>We value your privacy and protect your personal information. Please refer to our <a href="{{ url_for('privacy') }}">Privacy Policy</a> for more information.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">5. Limitation of Liability</h2>
+                        <p>The application is provided "as is" without warranty of any kind. In no event shall the application operators be liable for any damages arising out of the use or inability to use the application.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">6. Changes to Terms</h2>
+                        <p>We reserve the right to modify these terms at any time. We will notify users of any significant changes.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="h4">7. Contact</h2>
+                        <p>If you have any questions about these Terms, please contact us at support@jobtracker.example.com.</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Back to Registration</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

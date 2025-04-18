@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="row align-items-center my-5">
+    <div class="col-lg-7">
+        <h1 class="display-4 fw-bold mb-4">Track Your Job Applications</h1>
+        <p class="lead mb-4">Stay organized during your job search with our simple and effective application tracking system.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-4 me-md-2">Go to Dashboard</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card p-4 shadow-lg">
+            <h3 class="mb-3">Features</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Track job applications in one place</li>
+                <li class="list-group-item">Monitor application status and progress</li>
+                <li class="list-group-item">Record interview details and follow-ups</li>
+                <li class="list-group-item">Keep notes on each application</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h3 class="card-title">Easy Organization</h3>
+                <p class="card-text">Keep all your job applications organized in one place. Never lose track of where you've applied.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h3 class="card-title">Status Tracking</h3>
+                <p class="card-text">Update the status of each application as you progress through the hiring process.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h3 class="card-title">Interview Management</h3>
+                <p class="card-text">Record details about interviews, including dates, times, and contact information.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

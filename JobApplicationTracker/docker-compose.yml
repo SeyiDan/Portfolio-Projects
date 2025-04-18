@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./instance:/app/instance
+      - ./static/uploads:/app/static/uploads
+    environment:
+      - SECRET_KEY=dev-key-for-testing
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=0
+    restart: unless-stopped 

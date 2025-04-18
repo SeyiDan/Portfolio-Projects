@@ -9,10 +9,10 @@ A Flask-based web application for tracking health metrics including sleep, nutri
 
 **Technologies**: Python, Flask, SQLAlchemy, HTML, CSS, JavaScript
 
-### LingoLearnAI
-A language learning application that uses NLP techniques to help users learn new languages more effectively. The application provides personalized learning paths and interactive exercises.
+### JobApplicationTracker
+A comprehensive web application for tracking job applications, interviews, and offers. Users can manage their job search process, upload resumes and cover letters, and track progress with different companies.
 
-**Technologies**: Python, Flask, Natural Language Processing, Machine Learning
+**Technologies**: Python, Flask, SQLAlchemy, Bootstrap, HTML, CSS, JavaScript
 
 ### CodeCollaborationHub
 A real-time code collaboration platform that allows developers to work together on coding projects. Features include real-time code sharing, chat functionality, and version control integration.
@@ -38,12 +38,28 @@ Each project has its own setup instructions in their respective directories. Gen
    python app.py
    ```
 
+## Docker Support
+
+The JobApplicationTracker project includes Docker support. To run it using Docker:
+
+1. Navigate to the project directory:
+   ```
+   cd JobApplicationTracker
+   ```
+
+2. Build and start the Docker container:
+   ```
+   docker-compose up -d
+   ```
+
+3. Access the application at http://localhost:5000
+
 ## Port Configuration
 
 Each application is configured to run on a different port to avoid conflicts:
 
 - **HealthTrackerApp**: http://localhost:8000
-- **LingoLearnAI**: http://localhost:5001  
+- **JobApplicationTracker**: http://localhost:5000
 - **CodeCollaborationHub**: http://localhost:8080
 
 ## Contact

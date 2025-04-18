@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}{% if application %}Edit Application{% else %}Add New Application{% endif %} - Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h2 class="mb-0">{% if application %}Edit Application{% else %}Add New Application{% endif %}</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        {% if application %}
+                            <input type="hidden" name="id" value="{{ application.id }}">
+                        {% endif %}
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Company Information</h4>
+                                <div class="mb-3">
+                                    <label for="company_name" class="form-label">Company Name*</label>
+                                    <input type="text" class="form-control {% if form.company_name.errors %}is-invalid{% endif %}" 
+                                           id="company_name" name="company_name" 
+                                           value="{{ application.company_name if application else form.company_name.data or '' }}" required>
+                                    {% if form.company_name.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.company_name.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="company_website" class="form-label">Company Website</label>
+                                    <input type="url" class="form-control {% if form.company_website.errors %}is-invalid{% endif %}" 
+                                           id="company_website" name="company_website" 
+                                           value="{{ application.company_website if application else form.company_website.data or '' }}">
+                                    {% if form.company_website.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.company_website.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input type="text" class="form-control {% if form.location.errors %}is-invalid{% endif %}" 
+                                           id="location" name="location" 
+                                           value="{{ application.location if application else form.location.data or '' }}">
+                                    {% if form.location.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.location.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="job_type" class="form-label">Job Type*</label>
+                                    <select class="form-select {% if form.job_type.errors %}is-invalid{% endif %}" 
+                                            id="job_type" name="job_type" required>
+                                        <option value="" disabled {% if not application and not form.job_type.data %}selected{% endif %}>Select job type</option>
+                                        <option value="Full-time" {% if (application and application.job_type == 'Full-time') or form.job_type.data == 'Full-time' %}selected{% endif %}>Full-time</option>
+                                        <option value="Part-time" {% if (application and application.job_type == 'Part-time') or form.job_type.data == 'Part-time' %}selected{% endif %}>Part-time</option>
+                                        <option value="Contract" {% if (application and application.job_type == 'Contract') or form.job_type.data == 'Contract' %}selected{% endif %}>Contract</option>
+                                        <option value="Internship" {% if (application and application.job_type == 'Internship') or form.job_type.data == 'Internship' %}selected{% endif %}>Internship</option>
+                                        <option value="Remote" {% if (application and application.job_type == 'Remote') or form.job_type.data == 'Remote' %}selected{% endif %}>Remote</option>
+                                    </select>
+                                    {% if form.job_type.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.job_type.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Position Details</h4>
+                                <div class="mb-3">
+                                    <label for="position" class="form-label">Position/Title*</label>
+                                    <input type="text" class="form-control {% if form.position.errors %}is-invalid{% endif %}" 
+                                           id="position" name="position" 
+                                           value="{{ application.position if application else form.position.data or '' }}" required>
+                                    {% if form.position.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.position.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="salary_range" class="form-label">Salary Range</label>
+                                    <input type="text" class="form-control {% if form.salary_range.errors %}is-invalid{% endif %}" 
+                                           id="salary_range" name="salary_range" 
+                                           value="{{ application.salary_range if application else form.salary_range.data or '' }}" 
+                                           placeholder="e.g., $60,000 - $80,000">
+                                    {% if form.salary_range.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.salary_range.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="date_applied" class="form-label">Date Applied*</label>
+                                    <input type="date" class="form-control {% if form.date_applied.errors %}is-invalid{% endif %}" 
+                                           id="date_applied" name="date_applied" 
+                                           value="{{ application.date_applied.strftime('%Y-%m-%d') if application and application.date_applied else form.date_applied.data or '' }}" required>
+                                    {% if form.date_applied.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.date_applied.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status*</label>
+                                    <select class="form-select {% if form.status.errors %}is-invalid{% endif %}" 
+                                            id="status" name="status" required>
+                                        <option value="" disabled {% if not application and not form.status.data %}selected{% endif %}>Select status</option>
+                                        <option value="Applied" {% if (application and application.status == 'Applied') or form.status.data == 'Applied' %}selected{% endif %}>Applied</option>
+                                        <option value="Interview" {% if (application and application.status == 'Interview') or form.status.data == 'Interview' %}selected{% endif %}>Interview</option>
+                                        <option value="Offer" {% if (application and application.status == 'Offer') or form.status.data == 'Offer' %}selected{% endif %}>Offer</option>
+                                        <option value="Rejected" {% if (application and application.status == 'Rejected') or form.status.data == 'Rejected' %}selected{% endif %}>Rejected</option>
+                                        <option value="Withdrawn" {% if (application and application.status == 'Withdrawn') or form.status.data == 'Withdrawn' %}selected{% endif %}>Withdrawn</option>
+                                    </select>
+                                    {% if form.status.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.status.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h4 class="mb-3">Application Details</h4>
+                                <div class="mb-3">
+                                    <label for="job_description" class="form-label">Job Description</label>
+                                    <textarea class="form-control {% if form.job_description.errors %}is-invalid{% endif %}" 
+                                              id="job_description" name="job_description" rows="4">{{ application.job_description if application else form.job_description.data or '' }}</textarea>
+                                    {% if form.job_description.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.job_description.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="job_posting_url" class="form-label">Job Posting URL</label>
+                                    <input type="url" class="form-control {% if form.job_posting_url.errors %}is-invalid{% endif %}" 
+                                           id="job_posting_url" name="job_posting_url" 
+                                           value="{{ application.job_posting_url if application else form.job_posting_url.data or '' }}">
+                                    {% if form.job_posting_url.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.job_posting_url.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="contact_name" class="form-label">Contact Person</label>
+                                    <input type="text" class="form-control {% if form.contact_name.errors %}is-invalid{% endif %}" 
+                                           id="contact_name" name="contact_name" 
+                                           value="{{ application.contact_name if application else form.contact_name.data or '' }}">
+                                    {% if form.contact_name.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.contact_name.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="contact_email" class="form-label">Contact Email</label>
+                                    <input type="email" class="form-control {% if form.contact_email.errors %}is-invalid{% endif %}" 
+                                           id="contact_email" name="contact_email" 
+                                           value="{{ application.contact_email if application else form.contact_email.data or '' }}">
+                                    {% if form.contact_email.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.contact_email.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="notes" class="form-label">Notes</label>
+                                    <textarea class="form-control {% if form.notes.errors %}is-invalid{% endif %}" 
+                                              id="notes" name="notes" rows="3">{{ application.notes if application else form.notes.data or '' }}</textarea>
+                                    {% if form.notes.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.notes.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="resume" class="form-label">Resume (PDF)</label>
+                                    <input type="file" class="form-control {% if form.resume.errors %}is-invalid{% endif %}" 
+                                           id="resume" name="resume" accept=".pdf">
+                                    {% if application and application.resume_filename %}
+                                        <div class="form-text">
+                                            Current file: {{ application.resume_filename }}
+                                            <a href="{{ url_for('download_resume', id=application.id) }}" class="text-decoration-none">
+                                                <i class="fas fa-download ms-2"></i> Download
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    {% if form.resume.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.resume.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="cover_letter" class="form-label">Cover Letter (PDF)</label>
+                                    <input type="file" class="form-control {% if form.cover_letter.errors %}is-invalid{% endif %}" 
+                                           id="cover_letter" name="cover_letter" accept=".pdf">
+                                    {% if application and application.cover_letter_filename %}
+                                        <div class="form-text">
+                                            Current file: {{ application.cover_letter_filename }}
+                                            <a href="{{ url_for('download_cover_letter', id=application.id) }}" class="text-decoration-none">
+                                                <i class="fas fa-download ms-2"></i> Download
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    {% if form.cover_letter.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.cover_letter.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                {% if application %}Update Application{% else %}Save Application{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
