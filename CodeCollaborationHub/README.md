@@ -1,4 +1,4 @@
-# CodeCollaborationHub
+# Code Collaboration Hub
 
 A real-time code collaboration platform that allows developers to work together on coding projects.
 
@@ -29,115 +29,71 @@ A real-time code collaboration platform that allows developers to work together 
 - pip (Python package manager)
 - Git
 
-### Setup
+### Setup Without Docker
 
-1. Clone the repository:
+1. Clone the repository
+2. Navigate to the project directory:
+   ```bash
+   cd CodeCollaborationHub
+   ```
 
-```bash
-git clone https://github.com/yourusername/CodeCollaborationHub.git
-cd CodeCollaborationHub
-```
+3. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
 
-2. Create a virtual environment:
+4. Activate the virtual environment:
+   - **Windows**: `venv\Scripts\activate`
+   - **macOS/Linux**: `source venv/bin/activate`
 
-```bash
-python -m venv venv
-```
+5. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. Activate the virtual environment:
+6. Run the application:
+   ```bash
+   python app.py
+   ```
 
-**Windows**:
-```bash
-venv\Scripts\activate
-```
+7. Access the application at http://localhost:8080
 
-**macOS/Linux**:
-```bash
-source venv/bin/activate
-```
+### Setup With Docker
 
-4. Install dependencies:
+1. Navigate to the project directory:
+   ```bash
+   cd CodeCollaborationHub
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+2. Build and run the containers:
+   ```bash
+   docker-compose up -d
+   ```
 
-5. Set environment variables (optional):
-
-Create a `.env` file in the root directory:
-
-```
-SECRET_KEY=your_secret_key_here
-DATABASE_URL=postgresql://username:password@localhost/codecollaborationhub
-FLASK_APP=app.py
-FLASK_ENV=development
-```
-
-6. Initialize the database:
-
-```bash
-flask shell
-```
-
-In the shell:
-```python
-from app import db
-db.create_all()
-exit()
-```
-
-7. Run the application:
-
-```bash
-python app.py
-```
-
-The application will be available at http://localhost:8080
-
-## Docker Deployment
-
-To run the application using Docker:
-
-1. Build and start the containers using Docker Compose:
-
-```bash
-docker-compose up -d
-```
-
-2. Access the application at http://localhost:8080
-
-## Usage
-
-1. Register a new account
-2. Create a new project or join an existing one
-3. Invite collaborators to your project
-4. Start coding together in real-time
-5. Use the chat function to communicate with team members
-6. Save and commit your changes to Git
+3. Access the application at http://localhost:8080
 
 ## Project Structure
 
 ```
 CodeCollaborationHub/
-├── app/
-│   ├── models/        # Database models
-│   ├── routes/        # Route definitions
-│   ├── static/        # Static files (CSS, JS)
-│   ├── templates/     # HTML templates
-│   └── __init__.py    # Application initialization
-├── tests/             # Test suite
-├── .env               # Environment variables
-├── app.py             # Application entry point
-├── Dockerfile         # Docker configuration
-├── docker-compose.yml # Docker Compose configuration
-├── requirements.txt   # Python dependencies
-└── README.md          # Project documentation
+├── app/                # Application package
+│   ├── models/         # Database models
+│   ├── routes/         # Route definitions
+│   ├── static/         # Static files (CSS, JS)
+│   ├── templates/      # HTML templates
+│   └── __init__.py     # Application initialization
+├── tests/              # Test suite
+├── app.py              # Application entry point
+├── requirements.txt    # Python dependencies
+├── Dockerfile          # Docker configuration
+├── docker-compose.yml  # Docker Compose configuration
+└── README.md           # Project documentation
 ```
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License.
 
 ## Contact
 
-Your Name - your.email@example.com 
+For more information, please contact me at oladejo.seyi2@gmail.com 
