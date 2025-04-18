@@ -143,10 +143,7 @@ healthtrackerapp/
 └── README.md          # Project documentation
 ```
 
-## License
-
-MIT
 
 ## Contact
 
-Your Name - your.email@example.com 
+Your Name - oladejo.seyi2@gmail.com
