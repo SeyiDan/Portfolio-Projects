@@ -90,5 +90,4 @@ local_settings.py
 
 # Ignore git subdirectories from project folders
 HealthTrackerApp/.git/
-LingoLearnAI/.git/
 CodeCollaborationHub/.git/ 

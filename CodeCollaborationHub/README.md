@@ -1,63 +1,143 @@
 # CodeCollaborationHub
 
-A collaborative platform for developers to learn, share, and work together on coding projects.
+A real-time code collaboration platform that allows developers to work together on coding projects.
 
 ## Features
 
-- User authentication and profiles
-- Project creation and management
-- Real-time code collaboration
-- Version control integration
-- Discussion forums and commenting
-- Language learning resources
+- **User Authentication**: Register, login, and manage user profiles
+- **Project Management**: Create and manage coding projects
+- **Real-time Collaboration**: Edit code together with multiple users simultaneously
+- **Chat Functionality**: Communicate with team members in real-time
+- **Version Control**: Integration with Git for version control
+- **Code Highlighting**: Syntax highlighting for multiple programming languages
+- **Discussion Forums**: Participate in coding discussions and share knowledge
 
-## Technology Stack
+## Technologies Used
 
-- Python 3.9
-- Flask web framework
-- PostgreSQL database
-- Docker for containerization
+- **Backend**: Python, Flask, SocketIO
+- **Frontend**: HTML, CSS, Bootstrap, JavaScript
+- **Database**: SQLAlchemy, PostgreSQL
+- **Real-time Communication**: Flask-SocketIO
+- **Authentication**: Flask-Login
+- **Code Highlighting**: Pygments
 
-## Setup and Installation
+## Installation
 
 ### Prerequisites
 
-- Docker and Docker Compose
+- Python 3.8+
+- pip (Python package manager)
 - Git
 
-### Installation Steps
+### Setup
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/CodeCollaborationHub.git
-   cd CodeCollaborationHub
-   ```
 
-2. Start the application with Docker Compose:
-   ```
-   docker-compose up -d
-   ```
-
-3. Access the application at http://localhost:5000
-
-### Development
-
-To run the application in development mode:
-
-```
-docker-compose up
+```bash
+git clone https://github.com/yourusername/CodeCollaborationHub.git
+cd CodeCollaborationHub
 ```
 
-This will start the application with live reload enabled.
+2. Create a virtual environment:
 
-## Environment Variables
+```bash
+python -m venv venv
+```
 
-The following environment variables can be configured:
+3. Activate the virtual environment:
 
-- `FLASK_APP`: Entry point to the Flask application
-- `FLASK_ENV`: Application environment (development/production)
-- `DATABASE_URL`: PostgreSQL connection string
+**Windows**:
+```bash
+venv\Scripts\activate
+```
+
+**macOS/Linux**:
+```bash
+source venv/bin/activate
+```
+
+4. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+5. Set environment variables (optional):
+
+Create a `.env` file in the root directory:
+
+```
+SECRET_KEY=your_secret_key_here
+DATABASE_URL=postgresql://username:password@localhost/codecollaborationhub
+FLASK_APP=app.py
+FLASK_ENV=development
+```
+
+6. Initialize the database:
+
+```bash
+flask shell
+```
+
+In the shell:
+```python
+from app import db
+db.create_all()
+exit()
+```
+
+7. Run the application:
+
+```bash
+python app.py
+```
+
+The application will be available at http://localhost:8080
+
+## Docker Deployment
+
+To run the application using Docker:
+
+1. Build and start the containers using Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+2. Access the application at http://localhost:8080
+
+## Usage
+
+1. Register a new account
+2. Create a new project or join an existing one
+3. Invite collaborators to your project
+4. Start coding together in real-time
+5. Use the chat function to communicate with team members
+6. Save and commit your changes to Git
+
+## Project Structure
+
+```
+CodeCollaborationHub/
+├── app/
+│   ├── models/        # Database models
+│   ├── routes/        # Route definitions
+│   ├── static/        # Static files (CSS, JS)
+│   ├── templates/     # HTML templates
+│   └── __init__.py    # Application initialization
+├── tests/             # Test suite
+├── .env               # Environment variables
+├── app.py             # Application entry point
+├── Dockerfile         # Docker configuration
+├── docker-compose.yml # Docker Compose configuration
+├── requirements.txt   # Python dependencies
+└── README.md          # Project documentation
+```
 
 ## License
 
-MIT 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+Your Name - your.email@example.com 
